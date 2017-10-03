@@ -11,9 +11,10 @@ using System;
 namespace GigHub.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170928202635_CteateGigTable")]
+    partial class CteateGigTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,44 +70,6 @@ namespace GigHub.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("GigHub.Models.Genre", b =>
-                {
-                    b.Property<byte>("ID");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Genres");
-                });
-
-            modelBuilder.Entity("GigHub.Models.Gig", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ArtistId")
-                        .IsRequired();
-
-                    b.Property<DateTime>("DateTime");
-
-                    b.Property<byte>("GenreID");
-
-                    b.Property<string>("Venue")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ArtistId");
-
-                    b.HasIndex("GenreID");
-
-                    b.ToTable("Gigs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -215,19 +178,6 @@ namespace GigHub.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("GigHub.Models.Gig", b =>
-                {
-                    b.HasOne("GigHub.Models.ApplicationUser", "Artist")
-                        .WithMany()
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("GigHub.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

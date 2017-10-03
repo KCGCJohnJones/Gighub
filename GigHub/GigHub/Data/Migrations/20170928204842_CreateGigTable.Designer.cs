@@ -11,9 +11,10 @@ using System;
 namespace GigHub.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170928204842_CreateGigTable")]
+    partial class CreateGigTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,9 +76,7 @@ namespace GigHub.Data.Migrations
                 {
                     b.Property<byte>("ID");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Name");
 
                     b.HasKey("ID");
 
@@ -89,16 +88,13 @@ namespace GigHub.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ArtistId")
-                        .IsRequired();
+                    b.Property<string>("ArtistId");
 
                     b.Property<DateTime>("DateTime");
 
-                    b.Property<byte>("GenreID");
+                    b.Property<byte?>("GenreID");
 
-                    b.Property<string>("Venue")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Venue");
 
                     b.HasKey("ID");
 
@@ -221,13 +217,11 @@ namespace GigHub.Data.Migrations
                 {
                     b.HasOne("GigHub.Models.ApplicationUser", "Artist")
                         .WithMany()
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ArtistId");
 
                     b.HasOne("GigHub.Models.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenreID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("GenreID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
